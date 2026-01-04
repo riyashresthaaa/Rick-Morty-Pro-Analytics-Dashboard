@@ -5,9 +5,11 @@
 
 import { memo, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useCharacterDetail, useFavorites } from '../../hooks';
-import { CharacterDetailSkeleton, ErrorState } from '../../components';
-import type { Episode } from '../../types';
+import { useCharacterDetail } from '../hooks/useCharacterDetail';
+import { useFavorites } from '../hooks/useFavorites';
+import { CharacterDetailSkeleton } from '../components/Skeleton';
+import { ErrorState } from '../components/ErrorState';
+import type { Episode } from '../types';
 
 export function CharacterDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -87,8 +89,8 @@ export function CharacterDetailPage() {
               <button
                 onClick={() => toggleFavorite(character.id)}
                 className={`absolute right-4 top-4 rounded-full p-3 transition-all duration-200 ${isFav
-                    ? 'bg-red-500 text-white shadow-lg'
-                    : 'bg-gray-900/70 text-gray-400 hover:bg-red-500 hover:text-white'
+                  ? 'bg-red-500 text-white shadow-lg'
+                  : 'bg-gray-900/70 text-gray-400 hover:bg-red-500 hover:text-white'
                   }`}
                 aria-label={isFav ? 'Remove from favorites' : 'Add to favorites'}
               >

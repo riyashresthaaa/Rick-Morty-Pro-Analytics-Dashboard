@@ -5,19 +5,19 @@
 
 import { useMemo, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {
-  SearchBar,
-  FilterPanel,
-  CharacterCard,
-  CharacterGridSkeleton,
-  ErrorState,
-  EmptyState,
-  Pagination,
-} from '../../components';
-import { useURLSearchParamsState, useCharacters, useFavorites, useDebounce } from '../../hooks';
-import { getCharactersByIds } from '../../services/api';
+import { SearchBar } from '../components/SearchBar';
+import { FilterPanel } from '../components/FilterPanel';
+import { CharacterCard } from '../components/CharacterCard';
+import { CharacterGridSkeleton } from '../components/Skeleton';
+import { ErrorState, EmptyState } from '../components/ErrorState';
+import { Pagination } from '../components/Pagination';
+import { useURLSearchParamsState } from '../hooks/useURLSearchParams';
+import { useCharacters } from '../hooks/useCharacters';
+import { useFavorites } from '../hooks/useFavorites';
+import { useDebounce } from '../hooks/useDebounce';
+import { getCharactersByIds } from '../services/api';
 import { useEffect, useState } from 'react';
-import type { Character } from '../../types';
+import type { Character } from '../types';
 
 export function HomePage() {
   const [searchParams] = useSearchParams();

@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, memo } from 'react';
-import { useDebounce } from '../../hooks';
+import { useDebounce } from '../hooks/useDebounce';
 
 interface SearchBarProps {
   value: string;

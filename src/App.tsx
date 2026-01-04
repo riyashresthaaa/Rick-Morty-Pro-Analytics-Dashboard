@@ -4,9 +4,10 @@
  */
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Header } from './components';
-import { HomePage, CharacterDetailPage } from './pages';
-import { useFavorites } from './hooks';
+import { Header } from './components/Header';
+import { HomePage } from './pages/HomePage';
+import { CharacterDetailPage } from './pages/CharacterDetailPage';
+import { useFavorites } from './hooks/useFavorites';
 
 function AppContent() {
   // Get favorites count for the header

@@ -4,7 +4,7 @@
  */
 
 import { memo } from 'react';
-import type { CharacterStatus, CharacterGender } from '../../types';
+import type { CharacterStatus, CharacterGender } from '../types';
 
 interface FilterPanelProps {
   status: CharacterStatus | '';

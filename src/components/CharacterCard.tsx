@@ -6,7 +6,7 @@
 
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import type { Character } from '../../types';
+import type { Character } from '../types';
 
 interface CharacterCardProps {
   character: Character;
@@ -33,11 +33,10 @@ export const CharacterCard = memo(
             e.stopPropagation();
             onToggleFavorite(character.id);
           }}
-          className={`absolute right-2 top-2 z-10 rounded-full p-2 transition-all duration-200 ${
-            isFavorite
+          className={`absolute right-2 top-2 z-10 rounded-full p-2 transition-all duration-200 ${isFavorite
               ? 'bg-red-500 text-white shadow-lg'
               : 'bg-gray-900/70 text-gray-400 hover:bg-red-500 hover:text-white'
-          }`}
+            }`}
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         >
           <svg
