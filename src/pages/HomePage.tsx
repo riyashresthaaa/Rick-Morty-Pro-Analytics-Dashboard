@@ -100,9 +100,6 @@ export function HomePage() {
     [updateParam]
   );
 
-  // Total count
-  const totalCharacters = pageInfo?.count ?? displayCharacters.length;
-
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-8">
