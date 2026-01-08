@@ -16,7 +16,7 @@ You can filter characters by multiple categories at once:
 
 Mix and match filters to find exactly who you're looking for!
 
-### Shareable Links (URL Sync)
+### Shareable Link
 Every search and filter you apply updates the URL in your browser address bar. This means you can:
 - **Bookmark** a specific search (e.g., "Alive Humans").
 - **Share** the link with a friend, and they'll see the exact same results.
