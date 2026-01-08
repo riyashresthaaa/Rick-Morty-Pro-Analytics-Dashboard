@@ -1,12 +1,4 @@
-/**
- * TypeScript interfaces for Rick & Morty API
- * Based on: https://rickandmortyapi.com/documentation
- */
-
-// ============================================
-// Base API Response Types
-// ============================================
-
+// API Response Types
 export interface ApiInfo {
   count: number;
   pages: number;
@@ -23,10 +15,7 @@ export interface ApiError {
   error: string;
 }
 
-// ============================================
 // Character Types
-// ============================================
-
 export type CharacterStatus = 'Alive' | 'Dead' | 'unknown';
 export type CharacterGender = 'Female' | 'Male' | 'Genderless' | 'unknown';
 
@@ -50,24 +39,18 @@ export interface Character {
   created: string;
 }
 
-// ============================================
 // Episode Types
-// ============================================
-
 export interface Episode {
   id: number;
   name: string;
   air_date: string;
-  episode: string; // Format: "S01E01"
+  episode: string;
   characters: string[];
   url: string;
   created: string;
 }
 
-// ============================================
 // Location Types
-// ============================================
-
 export interface Location {
   id: number;
   name: string;
@@ -78,10 +61,7 @@ export interface Location {
   created: string;
 }
 
-// ============================================
 // Filter Types
-// ============================================
-
 export interface CharacterFilters {
   name: string;
   status: CharacterStatus | '';
@@ -89,10 +69,7 @@ export interface CharacterFilters {
   gender: CharacterGender | '';
 }
 
-// ============================================
 // App State Types
-// ============================================
-
 export interface FavoritesState {
   characterIds: number[];
 }
@@ -104,10 +81,7 @@ export interface PaginationState {
   hasPrevPage: boolean;
 }
 
-// ============================================
 // Component Props Types
-// ============================================
-
 export interface CharacterCardProps {
   character: Character;
   isFavorite: boolean;
@@ -129,10 +103,7 @@ export interface FilterPanelProps {
   availableSpecies: string[];
 }
 
-// ============================================
-// Async State Types (for data fetching)
-// ============================================
-
+// Async State Types
 export type AsyncStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export interface AsyncState<T> {
@@ -141,10 +112,7 @@ export interface AsyncState<T> {
   error: string | null;
 }
 
-// ============================================
 // URL Search Params Type
-// ============================================
-
 export interface URLSearchParamsState {
   name: string;
   status: CharacterStatus | '';

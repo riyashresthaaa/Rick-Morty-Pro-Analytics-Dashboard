@@ -1,8 +1,4 @@
-/**
- * HomePage Component
- * The main dashboard showing the character grid, search, and filters.
- */
-
+// HomePage Component
 import { useMemo, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SearchBar } from '../components/SearchBar';
@@ -23,7 +19,7 @@ export function HomePage() {
   const [searchParams] = useSearchParams();
   const showFavorites = searchParams.get('favorites') === 'true';
 
-  // Manage filters and page number via URL parameters.
+  // Manage filters and page number via URL
   const {
     name,
     status,
@@ -34,13 +30,13 @@ export function HomePage() {
     resetFilters,
   } = useURLSearchParamsState();
 
-  // Manage favorite characters.
+  // Manage favorites
   const { favoriteIds, isFavorite, toggleFavorite } = useFavorites();
 
-  // Wait for typing to stop before searching.
+  // Debounce search input
   const debouncedName = useDebounce(name, 300);
 
-  // Group filters into a single object for the API.
+  // Filter params
   const filters = useMemo(
     () => ({
       name: debouncedName,
@@ -51,17 +47,17 @@ export function HomePage() {
     [debouncedName, status, species, gender]
   );
 
-  // Load characters from the API.
+  // Fetch characters
   const { characters, status: fetchStatus, error, pageInfo, refetch } = useCharacters(
     showFavorites ? {} : filters,
     showFavorites ? 1 : page
   );
 
-  // State for loading favorite characters specifically.
+  // Favorites state
   const [favoriteCharacters, setFavoriteCharacters] = useState<Character[]>([]);
   const [favoritesLoading, setFavoritesLoading] = useState(false);
 
-  // If we are on the favorites page, fetch those specific characters.
+  // Fetch favorite characters
   useEffect(() => {
     if (showFavorites && favoriteIds.length > 0) {
       setFavoritesLoading(true);
@@ -74,11 +70,11 @@ export function HomePage() {
     }
   }, [showFavorites, favoriteIds]);
 
-  // Choose which list to show: Favorites or API results.
+  // Determine display list
   const displayCharacters = showFavorites ? favoriteCharacters : characters;
   const isLoading = showFavorites ? favoritesLoading : fetchStatus === 'loading';
 
-  // Update the URL when filters change.
+  // URL updates
   const handleNameChange = useCallback(
     (value: string) => updateParam('name', value),
     [updateParam]
@@ -104,7 +100,7 @@ export function HomePage() {
     [updateParam]
   );
 
-  // Calculate total count for the header.
+  // Total count
   const totalCharacters = pageInfo?.count ?? displayCharacters.length;
 
   return (
@@ -112,20 +108,19 @@ export function HomePage() {
       <div className="mx-auto max-w-7xl px-4 py-8">
         {/* Page Title */}
         <div className="mb-8 text-center">
-          <h1 className="mb-2 text-3xl font-bold text-white md:text-4xl">
-            {showFavorites ? '❤️ Favorite Characters' : '🚀 Character Explorer'}
+          <h1 className="mb-2 text-3xl font-bold text-gray-900 md:text-4xl">
+            {showFavorites ? '❤️ Favorite Characters' : 'Character Explorer'}
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-600">
             {showFavorites
               ? `You have ${favoriteIds.length} favorite character${favoriteIds.length !== 1 ? 's' : ''}`
-              : `Discover ${totalCharacters.toLocaleString()} characters from the multiverse`}
+              : `Discover the characters.`}
           </p>
         </div>
 
-        {/* Search and Filters - Only show when not in favorites view */}
+        {/* Search and Filters */}
         {!showFavorites && (
           <div className="mb-8 space-y-4">
-            {/* Search Bar */}
             <div className="flex justify-center">
               <SearchBar
                 value={name}
@@ -134,7 +129,6 @@ export function HomePage() {
               />
             </div>
 
-            {/* Filter Panel */}
             <FilterPanel
               status={status}
               species={species}
@@ -149,7 +143,7 @@ export function HomePage() {
 
         {/* Results Count */}
         {!isLoading && displayCharacters.length > 0 && (
-          <div className="mb-4 flex items-center justify-between text-sm text-gray-400">
+          <div className="mb-4 flex items-center justify-between text-sm text-gray-600">
             <span>
               Showing {displayCharacters.length}
               {!showFavorites && pageInfo && ` of ${pageInfo.count.toLocaleString()}`} characters

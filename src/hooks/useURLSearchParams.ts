@@ -1,9 +1,4 @@
-/**
- * useURLSearchParams Hook
- * Syncs filter state with URL search parameters
- * Enables shareable URLs and browser back/forward navigation
- */
-
+// useURLSearchParams Hook
 import { useSearchParams } from 'react-router-dom';
 import { useCallback, useMemo } from 'react';
 import type { CharacterFilters, CharacterStatus, CharacterGender } from '../types';
@@ -23,8 +18,7 @@ const DEFAULT_STATE: URLState = {
 export function useURLSearchParamsState() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Parse URL params into typed state
-  // useMemo prevents unnecessary recalculations
+  // Get current state from URL
   const state = useMemo<URLState>(() => {
     const name = searchParams.get('name') ?? DEFAULT_STATE.name;
     const status = (searchParams.get('status') ?? DEFAULT_STATE.status) as CharacterStatus | '';
@@ -36,18 +30,18 @@ export function useURLSearchParamsState() {
     return { name, status, species, gender, page };
   }, [searchParams]);
 
-  // Update a single parameter while preserving others
+  // Update a single filter/param
   const updateParam = useCallback(
     <K extends keyof URLState>(key: K, value: URLState[K]) => {
       setSearchParams((prev) => {
         const newParams = new URLSearchParams(prev);
 
-        // If setting a filter (not page), reset page to 1
+        // Reset page to 1 if filter changes
         if (key !== 'page') {
           newParams.set('page', '1');
         }
 
-        // Remove param if empty/default, otherwise set it
+        // Remove empty params
         if (value === '' || value === DEFAULT_STATE[key]) {
           newParams.delete(String(key));
         } else {
@@ -60,13 +54,12 @@ export function useURLSearchParamsState() {
     [setSearchParams]
   );
 
-  // Update multiple parameters at once
+  // Update multiple params
   const updateParams = useCallback(
     (updates: Partial<URLState>) => {
       setSearchParams((prev) => {
         const newParams = new URLSearchParams(prev);
 
-        // If any filter changed (not just page), reset page to 1
         const hasFilterChange = Object.keys(updates).some((key) => key !== 'page');
         if (hasFilterChange && !('page' in updates)) {
           newParams.set('page', '1');
@@ -87,7 +80,7 @@ export function useURLSearchParamsState() {
     [setSearchParams]
   );
 
-  // Reset all filters to defaults
+  // Clear all filters
   const resetFilters = useCallback(() => {
     setSearchParams(new URLSearchParams());
   }, [setSearchParams]);

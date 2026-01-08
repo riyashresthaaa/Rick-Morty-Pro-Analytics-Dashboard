@@ -1,8 +1,3 @@
-/**
- * Header Component
- * App header with navigation and favorites counter
- */
-
 import { memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -15,20 +10,13 @@ export const Header = memo(function Header({ favoritesCount }: HeaderProps) {
   const isHome = location.pathname === '/';
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-700 bg-gray-900/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-          <div className="relative">
-            {/* Portal effect */}
-            <div className="absolute inset-0 animate-pulse rounded-full bg-[#97ce4c]/30 blur-md" />
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#97ce4c] to-[#00b0c8]">
-              <span className="text-xl font-bold text-gray-900">R</span>
-            </div>
-          </div>
-          <div className="hidden sm:block">
-            <h1 className="text-lg font-bold text-white">Rick & Morty</h1>
-            <p className="text-xs text-gray-400">Pro Analytics Dashboard</p>
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">Rick & Morty</h1>
+            <p className="text-xs text-gray-500">Pro Analytics Dashboard</p>
           </div>
         </Link>
 
@@ -37,7 +25,7 @@ export const Header = memo(function Header({ favoritesCount }: HeaderProps) {
           {!isHome && (
             <Link
               to="/"
-              className="flex items-center gap-2 text-gray-400 transition-colors hover:text-white"
+              className="flex items-center gap-2 text-gray-600 transition-colors hover:text-gray-900"
             >
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -54,7 +42,7 @@ export const Header = memo(function Header({ favoritesCount }: HeaderProps) {
           {/* Favorites Counter */}
           <Link
             to="/?favorites=true"
-            className="relative flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-gray-400 transition-colors hover:border-red-500/50 hover:text-red-400"
+            className="relative flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-gray-600 transition-colors hover:border-red-400 hover:text-red-500"
           >
             <svg
               className="h-5 w-5"

@@ -1,8 +1,3 @@
-/**
- * SearchBar Component
- * A search input that waits for you to stop typing before triggering updates.
- */
-
 import { useState, useEffect, memo } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
 
@@ -13,25 +8,25 @@ interface SearchBarProps {
   debounceMs?: number;
 }
 
-// Memoized to avoid unnecessary re-renders.
+// Memoized search component
 export const SearchBar = memo(function SearchBar({
   value,
   onChange,
   placeholder = 'Search characters...',
   debounceMs = 300,
 }: SearchBarProps) {
-  // We keep a local value so the input updates immediately while you type.
+  // Local state for immediate feedback
   const [localValue, setLocalValue] = useState(value);
 
-  // This value only updates after the user stops typing for 'debounceMs' milliseconds.
+  // Debounced value for API calls
   const debouncedValue = useDebounce(localValue, debounceMs);
 
-  // Sync local state if the parent updates the value (e.g. from URL changes).
+  // Sync with parent value
   useEffect(() => {
     setLocalValue(value);
   }, [value]);
 
-  // Only tell the parent component to search when the debounced value changes.
+  // Notify parent on debounce
   useEffect(() => {
     if (debouncedValue !== value) {
       onChange(debouncedValue);
@@ -48,7 +43,7 @@ export const SearchBar = memo(function SearchBar({
       {/* Search Icon */}
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
         <svg
-          className="h-5 w-5 text-gray-400"
+          className="h-5 w-5 text-gray-500"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -69,7 +64,7 @@ export const SearchBar = memo(function SearchBar({
         value={localValue}
         onChange={(e) => setLocalValue(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-lg border border-gray-600 bg-gray-800/50 py-3 pl-10 pr-10 text-white placeholder-gray-400 backdrop-blur-sm transition-all duration-200 focus:border-[#97ce4c] focus:outline-none focus:ring-2 focus:ring-[#97ce4c]/20"
+        className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-10 text-gray-900 placeholder-gray-500 shadow-sm transition-all duration-200 focus:border-[#97ce4c] focus:outline-none focus:ring-2 focus:ring-[#97ce4c]/20"
         aria-label="Search characters"
       />
 
@@ -77,7 +72,7 @@ export const SearchBar = memo(function SearchBar({
       {localValue && (
         <button
           onClick={handleClear}
-          className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 transition-colors hover:text-white"
+          className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 transition-colors hover:text-gray-900"
           aria-label="Clear search"
         >
           <svg

@@ -1,8 +1,3 @@
-/**
- * CharacterDetailPage Component
- * Shows full details, location info, and episodes for a character.
- */
-
 import { memo, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCharacterDetail } from '../hooks/useCharacterDetail';
@@ -16,17 +11,17 @@ export function CharacterDetailPage() {
   const navigate = useNavigate();
   const characterId = id ? parseInt(id, 10) : 0;
 
-  // Load character data directly from the API.
+  // Load character data
   const { data, status, error, refetch } = useCharacterDetail(characterId);
 
-  // Allow adding/removing from favorites here too.
+  // Favorites toggle
   const { isFavorite, toggleFavorite } = useFavorites();
 
   const handleGoBack = useCallback(() => {
     navigate(-1);
   }, [navigate]);
 
-  // Show a loading skeleton while fetching.
+  // Loading state
   if (status === 'loading') {
     return (
       <div className="min-h-screen px-4 py-8">
@@ -48,7 +43,7 @@ export function CharacterDetailPage() {
           <div className="mt-4 text-center">
             <Link
               to="/"
-              className="text-[#97ce4c] transition-colors hover:text-[#b8e87c]"
+              className="text-[#97ce4c] transition-colors hover:text-[#6ba032]"
             >
               ← Back to characters
             </Link>
@@ -67,7 +62,7 @@ export function CharacterDetailPage() {
         {/* Back Button */}
         <button
           onClick={handleGoBack}
-          className="mb-6 flex items-center gap-2 text-gray-400 transition-colors hover:text-white"
+          className="mb-6 flex items-center gap-2 text-gray-600 transition-colors hover:text-gray-900"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -76,7 +71,7 @@ export function CharacterDetailPage() {
         </button>
 
         {/* Character Card */}
-        <article className="overflow-hidden rounded-2xl border border-gray-700 bg-gray-800/50 backdrop-blur-sm">
+        <article className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg">
           <div className="md:flex">
             {/* Character Image */}
             <div className="relative md:w-1/3">
@@ -90,7 +85,7 @@ export function CharacterDetailPage() {
                 onClick={() => toggleFavorite(character.id)}
                 className={`absolute right-4 top-4 rounded-full p-3 transition-all duration-200 ${isFav
                   ? 'bg-red-500 text-white shadow-lg'
-                  : 'bg-gray-900/70 text-gray-400 hover:bg-red-500 hover:text-white'
+                  : 'bg-white/90 text-gray-400 hover:bg-red-500 hover:text-white'
                   }`}
                 aria-label={isFav ? 'Remove from favorites' : 'Add to favorites'}
               >
@@ -112,8 +107,7 @@ export function CharacterDetailPage() {
 
             {/* Character Info */}
             <div className="flex-1 p-6">
-              {/* Name */}
-              <h1 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+              <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
                 {character.name}
               </h1>
 
@@ -155,7 +149,6 @@ export function CharacterDetailPage() {
                 )}
               </div>
 
-              {/* Created Date */}
               <p className="mt-4 text-sm text-gray-500">
                 Created: {new Date(character.created).toLocaleDateString()}
               </p>
@@ -163,8 +156,8 @@ export function CharacterDetailPage() {
           </div>
 
           {/* Episodes Section */}
-          <div className="border-t border-gray-700 p-6">
-            <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-white">
+          <div className="border-t border-gray-200 bg-gray-50 p-6">
+            <h2 className="mb-4 flex items-center gap-2 text-xl font-bold text-gray-900">
               <span>📺</span>
               Episode Appearances ({episodes.length})
             </h2>
@@ -180,59 +173,47 @@ export function CharacterDetailPage() {
   );
 }
 
-// Helper Components (memoized for performance)
-const StatusBadge = memo(function StatusBadge({
-  status,
-}: {
-  status: string;
-}) {
+// Status badge component
+const StatusBadge = memo(function StatusBadge({ status }: { status: string }) {
   const colors = {
-    Alive: 'bg-green-500/20 text-green-400 border-green-500/30',
-    Dead: 'bg-red-500/20 text-red-400 border-red-500/30',
-    unknown: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+    Alive: 'bg-green-100 text-green-800 border-green-300',
+    Dead: 'bg-red-100 text-red-800 border-red-300',
+    unknown: 'bg-gray-100 text-gray-800 border-gray-300',
   };
 
   const dotColors = {
-    Alive: 'bg-green-400',
-    Dead: 'bg-red-400',
-    unknown: 'bg-gray-400',
+    Alive: 'bg-green-500',
+    Dead: 'bg-red-500',
+    unknown: 'bg-gray-500',
   };
 
   const colorClass = colors[status as keyof typeof colors] ?? colors.unknown;
   const dotColor = dotColors[status as keyof typeof dotColors] ?? dotColors.unknown;
 
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm font-medium ${colorClass}`}
-    >
+    <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm font-medium ${colorClass}`}>
       <span className={`h-2 w-2 rounded-full ${dotColor}`} />
       {status}
     </span>
   );
 });
 
-const Badge = memo(function Badge({
-  label,
-  color,
-}: {
-  label: string;
-  color: 'blue' | 'purple' | 'gray';
-}) {
+// Generic badge component
+const Badge = memo(function Badge({ label, color }: { label: string; color: 'blue' | 'purple' | 'gray' }) {
   const colors = {
-    blue: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    purple: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    gray: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+    blue: 'bg-blue-100 text-blue-800 border-blue-300',
+    purple: 'bg-purple-100 text-purple-800 border-purple-300',
+    gray: 'bg-gray-100 text-gray-800 border-gray-300',
   };
 
   return (
-    <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium ${colors[color]}`}
-    >
+    <span className={`inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium ${colors[color]}`}>
       {label}
     </span>
   );
 });
 
+// Info section component
 const InfoSection = memo(function InfoSection({
   icon,
   label,
@@ -250,26 +231,23 @@ const InfoSection = memo(function InfoSection({
         <span>{icon}</span>
         {label}
       </p>
-      <p className="font-medium text-white">{value}</p>
-      {subValue && <p className="text-sm text-gray-400">{subValue}</p>}
+      <p className="font-medium text-gray-900">{value}</p>
+      {subValue && <p className="text-sm text-gray-600">{subValue}</p>}
     </div>
   );
 });
 
-const EpisodeCard = memo(function EpisodeCard({
-  episode,
-}: {
-  episode: Episode;
-}) {
+// Episode card component
+const EpisodeCard = memo(function EpisodeCard({ episode }: { episode: Episode }) {
   return (
-    <div className="rounded-lg border border-gray-700 bg-gray-700/50 p-3 transition-colors hover:border-[#97ce4c]/50">
+    <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm transition-colors hover:border-[#97ce4c]">
       <div className="flex items-center gap-2">
-        <span className="shrink-0 rounded bg-[#97ce4c]/20 px-2 py-0.5 text-xs font-bold text-[#97ce4c]">
+        <span className="shrink-0 rounded bg-[#97ce4c] px-2 py-0.5 text-xs font-bold text-white">
           {episode.episode}
         </span>
-        <span className="truncate text-sm text-gray-400">{episode.air_date}</span>
+        <span className="truncate text-sm text-gray-500">{episode.air_date}</span>
       </div>
-      <p className="mt-1 truncate font-medium text-white" title={episode.name}>
+      <p className="mt-1 truncate font-medium text-gray-900" title={episode.name}>
         {episode.name}
       </p>
     </div>

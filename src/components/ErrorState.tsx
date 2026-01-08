@@ -1,8 +1,3 @@
-/**
- * ErrorState Component
- * Displays error messages with retry functionality
- */
-
 import { memo } from 'react';
 
 interface ErrorStateProps {
@@ -17,11 +12,10 @@ export const ErrorState = memo(function ErrorState({
   onRetry,
 }: ErrorStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-red-500/30 bg-red-500/10 p-8 text-center">
-      {/* Error Icon */}
-      <div className="mb-4 rounded-full bg-red-500/20 p-4">
+    <div className="flex flex-col items-center justify-center rounded-xl border border-red-200 bg-red-50 p-8 text-center">
+      <div className="mb-4 rounded-full bg-red-100 p-4">
         <svg
-          className="h-10 w-10 text-red-400"
+          className="h-10 w-10 text-red-500"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -35,8 +29,8 @@ export const ErrorState = memo(function ErrorState({
         </svg>
       </div>
 
-      <h3 className="mb-2 text-xl font-bold text-white">{title}</h3>
-      <p className="mb-4 text-gray-400">{message}</p>
+      <h3 className="mb-2 text-xl font-bold text-gray-900">{title}</h3>
+      <p className="mb-4 text-gray-600">{message}</p>
 
       {onRetry && (
         <button
@@ -63,7 +57,6 @@ export const ErrorState = memo(function ErrorState({
   );
 });
 
-// Empty State variant for no results
 interface EmptyStateProps {
   title?: string;
   message?: string;
@@ -78,9 +71,8 @@ export const EmptyState = memo(function EmptyState({
   onAction,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-gray-700 bg-gray-800/50 p-8 text-center">
-      {/* Empty Icon */}
-      <div className="mb-4 rounded-full bg-gray-700 p-4">
+    <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+      <div className="mb-4 rounded-full bg-gray-100 p-4">
         <svg
           className="h-10 w-10 text-gray-400"
           fill="none"
@@ -96,13 +88,13 @@ export const EmptyState = memo(function EmptyState({
         </svg>
       </div>
 
-      <h3 className="mb-2 text-xl font-bold text-white">{title}</h3>
-      <p className="mb-4 text-gray-400">{message}</p>
+      <h3 className="mb-2 text-xl font-bold text-gray-900">{title}</h3>
+      <p className="mb-4 text-gray-600">{message}</p>
 
       {actionLabel && onAction && (
         <button
           onClick={onAction}
-          className="inline-flex items-center gap-2 rounded-lg bg-[#97ce4c] px-4 py-2 font-medium text-gray-900 transition-colors hover:bg-[#b8e87c]"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#97ce4c] px-4 py-2 font-medium text-gray-900 transition-colors hover:bg-[#6ba032]"
         >
           {actionLabel}
         </button>

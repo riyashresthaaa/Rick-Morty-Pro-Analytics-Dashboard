@@ -1,8 +1,3 @@
-/**
- * Main App Component
- * Sets up routing and global layout
- */
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
@@ -14,11 +9,9 @@ function AppContent() {
   const { favoritesCount } = useFavorites();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f0f1a] to-[#1a1a2e] text-white">
-      {/* Global Header */}
+    <div className="min-h-screen bg-gray-50 text-gray-900">
       <Header favoritesCount={favoritesCount} />
 
-      {/* Main Content */}
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -26,8 +19,7 @@ function AppContent() {
         </Routes>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+      <footer className="border-t border-gray-200 py-6 text-center text-sm text-gray-500">
         <p>
           Data provided by{' '}
           <a

@@ -1,8 +1,3 @@
-/**
- * FilterPanel Component
- * Lets users filter by Status, Species, and Gender.
- */
-
 import { memo } from 'react';
 import type { CharacterStatus, CharacterGender } from '../types';
 
@@ -32,7 +27,7 @@ const SPECIES_OPTIONS = [
   'unknown',
 ];
 
-// Memoized so it doesn't re-render unless the filters actually change.
+// Memoized filter component
 export const FilterPanel = memo(function FilterPanel({
   status,
   species,
@@ -45,9 +40,9 @@ export const FilterPanel = memo(function FilterPanel({
   const hasActiveFilters = status || species || gender;
 
   return (
-    <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-4 backdrop-blur-sm">
+    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white">Filters</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
         {hasActiveFilters && (
           <button
             onClick={onReset}
@@ -132,11 +127,11 @@ const FilterSelect = memo(function FilterSelect({
 }: FilterSelectProps) {
   return (
     <div>
-      <label className="mb-1 block text-sm text-gray-400">{label}</label>
+      <label className="mb-1 block text-sm text-gray-600">{label}</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-gray-600 bg-gray-700 px-3 py-2 text-white transition-colors focus:border-[#97ce4c] focus:outline-none focus:ring-2 focus:ring-[#97ce4c]/20"
+        className="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-gray-900 transition-colors focus:border-[#97ce4c] focus:outline-none focus:ring-2 focus:ring-[#97ce4c]/20"
       >
         {options.map((option) => (
           <option key={option} value={option}>
@@ -155,11 +150,11 @@ interface FilterTagProps {
 
 const FilterTag = memo(function FilterTag({ label, onRemove }: FilterTagProps) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[#97ce4c]/20 px-3 py-1 text-sm text-[#97ce4c]">
+    <span className="inline-flex items-center gap-1 rounded-full bg-[#97ce4c]/10 px-3 py-1 text-sm text-[#97ce4c]">
       {label}
       <button
         onClick={onRemove}
-        className="ml-1 rounded-full p-0.5 transition-colors hover:bg-[#97ce4c]/30"
+        className="ml-1 rounded-full p-0.5 transition-colors hover:bg-[#97ce4c]/20"
         aria-label={`Remove ${label} filter`}
       >
         <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,7 +167,7 @@ const FilterTag = memo(function FilterTag({ label, onRemove }: FilterTagProps) {
 
 // Label formatters
 function getStatusLabel(status: string): string {
-  if (!status) return 'All Statuses';
+  if (!status) return 'All Status';
   return status.charAt(0).toUpperCase() + status.slice(1);
 }
 

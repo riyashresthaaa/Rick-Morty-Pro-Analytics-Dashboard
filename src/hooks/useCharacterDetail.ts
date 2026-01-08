@@ -1,8 +1,3 @@
-/**
- * useCharacterDetail Hook
- * Fetches detailed character data including episodes
- */
-
 import { useState, useEffect, useCallback } from 'react';
 import type { Character, Episode, Location, AsyncStatus } from '../types';
 import {
@@ -43,21 +38,17 @@ export function useCharacterDetail(characterId: number): UseCharacterDetailRetur
     setError(null);
 
     try {
-      // Fetch character first
       const character = await getCharacterById(characterId);
 
-      // Fetch episodes in parallel
       const episodeIds = extractEpisodeIds(character.episode);
       const episodesPromise = getEpisodesByIds(episodeIds);
 
-      // Fetch locations in parallel (if they exist)
       const originId = extractLocationId(character.origin.url);
       const locationId = extractLocationId(character.location.url);
 
       const originPromise = originId ? getLocationById(originId) : Promise.resolve(null);
       const locationPromise = locationId ? getLocationById(locationId) : Promise.resolve(null);
 
-      // Wait for all parallel requests
       const [episodes, originLocation, currentLocation] = await Promise.all([
         episodesPromise,
         originPromise,

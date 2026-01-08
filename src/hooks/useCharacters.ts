@@ -1,8 +1,3 @@
-/**
- * useCharacters Hook
- * Handles loading characters from the API, including errors and loading states.
- */
-
 import { useState, useEffect, useCallback } from 'react';
 import type { Character, CharacterFilters, ApiInfo, AsyncStatus } from '../types';
 import { getCharacters, ApiError } from '../services/api';
@@ -36,7 +31,6 @@ export function useCharacters(
     } catch (err) {
       if (err instanceof ApiError) {
         if (err.statusCode === 404) {
-          // 404 from the API just means "no results found" for this filter.
           setCharacters([]);
           setPageInfo(null);
           setError('No characters found matching your criteria');
@@ -50,7 +44,6 @@ export function useCharacters(
     }
   }, [filters, page]);
 
-  // Run the fetch whenever the page or filters change.
   useEffect(() => {
     fetchCharacters();
   }, [fetchCharacters]);

@@ -1,9 +1,3 @@
-/**
- * CharacterCard Component
- * Displays character information in a card format
- * Includes favorite toggle functionality
- */
-
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import type { Character } from '../types';
@@ -14,8 +8,7 @@ interface CharacterCardProps {
   onToggleFavorite: (id: number) => void;
 }
 
-// Using React.memo with custom comparison for optimal performance
-// Only re-renders when character data or favorite status changes
+// Optimized card component
 export const CharacterCard = memo(
   function CharacterCard({
     character,
@@ -25,8 +18,8 @@ export const CharacterCard = memo(
     const statusColor = getStatusColor(character.status);
 
     return (
-      <article className="group relative overflow-hidden rounded-xl border border-gray-700 bg-gray-800/50 backdrop-blur-sm transition-all duration-300 hover:border-[#97ce4c]/50 hover:shadow-lg hover:shadow-[#97ce4c]/10">
-        {/* Favorite Button - Positioned absolutely */}
+      <article className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+        {/* Favorite Button */}
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -34,8 +27,8 @@ export const CharacterCard = memo(
             onToggleFavorite(character.id);
           }}
           className={`absolute right-2 top-2 z-10 rounded-full p-2 transition-all duration-200 ${isFavorite
-              ? 'bg-red-500 text-white shadow-lg'
-              : 'bg-gray-900/70 text-gray-400 hover:bg-red-500 hover:text-white'
+            ? 'bg-red-500 text-white shadow-md'
+            : 'bg-white/90 text-gray-400 hover:bg-red-500 hover:text-white'
             }`}
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         >
@@ -76,10 +69,10 @@ export const CharacterCard = memo(
 
           {/* Character Info */}
           <div className="p-4">
-            <h3 className="mb-1 truncate text-lg font-bold text-white transition-colors group-hover:text-[#97ce4c]">
+            <h3 className="mb-1 truncate text-lg font-bold text-gray-900 transition-colors group-hover:text-[#97ce4c]">
               {character.name}
             </h3>
-            <p className="mb-2 text-sm text-gray-400">
+            <p className="mb-2 text-sm text-gray-600">
               {character.species}
               {character.type && ` • ${character.type}`}
             </p>
@@ -87,12 +80,12 @@ export const CharacterCard = memo(
             {/* Location Info */}
             <div className="space-y-1 text-xs text-gray-500">
               <div className="flex items-start gap-1">
-                <span className="shrink-0 text-gray-600">Origin:</span>
-                <span className="truncate text-gray-400">{character.origin.name}</span>
+                <span className="shrink-0 text-gray-700">Origin:</span>
+                <span className="truncate text-gray-600">{character.origin.name}</span>
               </div>
               <div className="flex items-start gap-1">
-                <span className="shrink-0 text-gray-600">Location:</span>
-                <span className="truncate text-gray-400">{character.location.name}</span>
+                <span className="shrink-0 text-gray-700">Location:</span>
+                <span className="truncate text-gray-600">{character.location.name}</span>
               </div>
             </div>
 
@@ -110,7 +103,7 @@ export const CharacterCard = memo(
       </article>
     );
   },
-  // Custom comparison function for React.memo
+  // Custom comparison
   (prevProps, nextProps) => {
     return (
       prevProps.character.id === nextProps.character.id &&
@@ -119,7 +112,7 @@ export const CharacterCard = memo(
   }
 );
 
-// Status color mapping
+// Status color helper
 function getStatusColor(status: string): {
   bg: string;
   text: string;
@@ -128,21 +121,21 @@ function getStatusColor(status: string): {
   switch (status) {
     case 'Alive':
       return {
-        bg: 'bg-green-500/20',
-        text: 'text-green-400',
-        dot: 'bg-green-400',
+        bg: 'bg-green-100',
+        text: 'text-green-800',
+        dot: 'bg-green-500',
       };
     case 'Dead':
       return {
-        bg: 'bg-red-500/20',
-        text: 'text-red-400',
-        dot: 'bg-red-400',
+        bg: 'bg-red-100',
+        text: 'text-red-800',
+        dot: 'bg-red-500',
       };
     default:
       return {
-        bg: 'bg-gray-500/20',
-        text: 'text-gray-400',
-        dot: 'bg-gray-400',
+        bg: 'bg-gray-100',
+        text: 'text-gray-800',
+        dot: 'bg-gray-500',
       };
   }
 }
